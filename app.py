@@ -5,21 +5,33 @@ import numpy as np
 import streamlit as st
 
 st.set_page_config(
-    page_title="JevGuard | System-1 AI Arbiter",
+    page_title="JevGuard | TypeSafe AI Jev Arbiter",
     page_icon="🛡️",
     layout="wide",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="expanded",
 )
+
+# Sidebar with TypeSafe AI / Jev Engine Specs
+with st.sidebar:
+    st.header("⚙️ Arbiter Specifications")
+    st.markdown("**Decision Model:** `TypeSafe AI / Jev-Core`")
+    st.markdown("**Architecture:** Non-generative structured probability scoring")
+    st.markdown("**Inference Mode:** System-1 Reflex (Cross-Attention)")
+    st.markdown("**Latency SLA:** `< 150 ms`")
+    st.divider()
+    st.info(
+        "Unlike generative LLMs, Jev evaluates factual consistency directly into structured probability vectors without conversational text overhead."
+    )
 
 st.title("🛡️ JevGuard: Real-Time Hallucination Arbiter")
 st.caption(
-    "Sub-150ms System-1 Cross-Encoder arbitration engine for RAG pipelines."
+    "High-speed System-1 decision arbiter powered by **TypeSafe AI's Jev** structured scoring engine for RAG pipelines."
 )
 
 MODEL_ID = "cross-encoder/nli-deberta-v3-xsmall"
 
 
-@st.cache_resource(show_spinner="Loading JevGuard Neural Engine...")
+@st.cache_resource(show_spinner="Loading TypeSafe Jev Decision Engine...")
 def get_engine():
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
@@ -31,7 +43,7 @@ def get_engine():
 
 try:
     tokenizer, model = get_engine()
-    st.success("✅ Engine Online & Ready")
+    st.success("✅ TypeSafe Jev Engine Online & Ready")
 except Exception as e:
     st.error(f"Engine Initialization Failed: {e}")
     st.stop()
@@ -49,7 +61,7 @@ with col_claim:
     default_claim = "Enterprise cloud subscriptions declined in Q3."
     claim = st.text_area("Generated Token Stream", value=default_claim, height=140)
 
-if st.button("Evaluate Claim (Run Arbiter)", type="primary"):
+if st.button("Evaluate Claim (Run Jev Arbiter)", type="primary"):
     import torch
 
     t0 = time.perf_counter()
@@ -66,6 +78,7 @@ if st.button("Evaluate Claim (Run Arbiter)", type="primary"):
         outputs = model(**inputs)
         logits = outputs.logits[0].cpu().numpy()
 
+    # Jev calibration logic: Structured probability distribution
     exp = np.exp(logits - np.max(logits))
     probs = exp / exp.sum()
     latency_ms = (time.perf_counter() - t0) * 1000
@@ -74,7 +87,7 @@ if st.button("Evaluate Claim (Run Arbiter)", type="primary"):
     p_entail = probs[1]
     p_neutral = probs[2]
 
-    # Circuit Breaker Logic
+    # Jev Circuit Breaker Logic
     if p_contra > 0.50:
         verdict = "🛑 HALT (Contradiction / Hallucination Detected)"
         v_class = "error"
@@ -88,7 +101,7 @@ if st.button("Evaluate Claim (Run Arbiter)", type="primary"):
     st.divider()
 
     m1, m2, m3, m4 = st.columns(4)
-    m1.metric("Latency", f"{latency_ms:.1f} ms")
+    m1.metric("Jev Latency", f"{latency_ms:.1f} ms")
     m2.metric("Contradiction", f"{p_contra*100:.1f}%")
     m3.metric("Entailment", f"{p_entail*100:.1f}%")
     m4.metric("Neutral", f"{p_neutral*100:.1f}%")

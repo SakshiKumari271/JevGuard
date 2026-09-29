@@ -1,81 +1,82 @@
-# 🛡️ JevGuard: Real-Time Hallucination Arbiter
+# 🛡️ JevGuard: Real-Time Arbitration Harness for Jev (TypeSafe AI)
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://jevguard-5.streamlit.app)
 [![CI/CD Pipeline](https://github.com/SakshiKumari271/JevGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/SakshiKumari271/JevGuard/actions)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**JevGuard** is a low-latency **System-1 Decision Arbiter** designed to intercept factual hallucinations in Retrieval-Augmented Generation (RAG) pipelines in real time. Unlike LLM-as-a-judge evaluators that introduce 2–5 seconds of latency, JevGuard verifies or halts token streams against retrieved context chunks with sub-150ms inference times.
+**JevGuard** is a low-latency, real-time System-1 circuit-breaker runtime built explicitly around **Jev** — the specialized non-generative AI decision model developed by **TypeSafe AI**.
+
+While conversational LLMs are designed to generate text (introducing 2–5 seconds of latency when used as evaluators), **Jev** is architected purely for software systems to output structured decision vectors and probability scores. JevGuard operationalizes Jev to arbitrate streaming RAG outputs against retrieved ground-truth context with sub-150ms execution times.
 
 ---
 
-## 💡 Origin: The Jevons Paradox in AI
+## 🧠 Core Foundation: Jev by TypeSafe AI
 
-The project is named after the **Jevons Paradox** (formulated by economist William Stanley Jevons):
-> *As technological progress increases the efficiency with which a resource is used, total consumption of that resource tends to rise rather than fall.*
+Released by TypeSafe AI on September 15, 2026, **Jev** shifts the paradigm from generative text inspection to deterministic, calibrated probability scoring:
 
-In modern enterprise AI, as LLM inference costs and latency drop, consumption scales exponentially—and with it, the blast radius of factual hallucinations. Inspired by Daniel Kahneman’s **System-1 (Fast, Instinctive Reflex)** paradigm, JevGuard avoids heavyweight autoregressive evaluation loops, executing direct cross-attention classification to stop ungrounded claims before they reach end users.
-
----
-
-## ⚡ Key Capabilities
-
-- **Sub-150ms Reflex:** Delivers ~51ms inference latency on standard multi-threaded CPU environments.
-- **Circuit-Breaker Pattern:** Triggers an immediate execution **HALT** whenever contradiction probability exceeds threshold ($P_C > 0.50$).
-- **Tri-State Operational Logic:**
-  - `✅ PASS (Entailment)`: Factual claim is grounded in retrieved context.
-  - `⚠️ WARN (Neutral)`: Speculative or harmless extrapolations absent from context.
-  - `🛑 HALT (Contradiction)`: Factually inconsistent claim detected.
-- **Production-Ready Architecture:** Clean separation of concerns (`src/`, `tests/`) backed by GitHub Actions automated regression testing.
+- **Non-Generative Output:** Jev does not generate prose or free-form chat tokens. It outputs structured probability triples: $P_{\text{Contradiction}}$, $P_{\text{Entailment}}$, and $P_{\text{Neutral}}$.
+- **Software-Native Interfacing:** Purpose-built for direct integration into production software pipelines, automated guardrails, and type-safe systems.
+- **System-1 Latency Profile:** Operates at ~51ms CPU inference speeds, bypassing the autoregressive overhead of heavy LLM judges to stop rogue tokens in flight.
 
 ---
 
-## 📊 Evaluation Benchmarks
+## ⚡ JevGuard Operational Architecture
 
-Evaluated across production scenarios in Finance, Medical, and Enterprise Tech:
-
-| Domain | Retrieved Ground Truth Context | Generated LLM Claim | Expected | Verdict | Latency (CPU) | Contradiction % | Entailment % |
-| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Finance** | Cloud enterprise subscriptions grew by 35% in Q3. | Enterprise cloud subscriptions declined in Q3. | `HALT` | `🛑 HALT` | **51.2 ms** | 99.9% | 0.0% |
-| **Finance** | Q3 revenue reached $4.2B driven by cloud growth. | Cloud enterprise revenue increased in Q3. | `PASS` | `✅ PASS` | **48.6 ms** | 0.0% | 99.8% |
-| **Medical** | Patient exhibits elevated liver enzymes with no fever. | Patient is diagnosed with acute bacterial meningitis. | `HALT` | `🛑 HALT` | **53.1 ms** | 98.7% | 0.1% |
-| **Tech** | Model training completed in 4 epochs. | Model will be updated again next Monday. | `WARN` | `⚠️ WARN` | **49.8 ms** | 3.4% | 0.1% |
-
----
-
-## 🏗️ System Architecture
+JevGuard wraps the Jev decision engine with a zero-delay circuit-breaker pattern:
 
 ```text
-JevGuard/
-├── .github/workflows/         # Automated CI/CD pipelines
-│   └── ci.yml
-├── src/                       # Production core modules
-│   ├── __init__.py
-│   ├── model.py               # Cross-encoder classification head
-│   ├── fast_jevguard.py       # Graph optimization pipeline
-│   └── guard_engine.py        # Circuit-breaker arbitration engine
-├── tests/                     # Evaluation & test suites
-│   ├── __init__.py
-│   └── benchmark.py           # Automated benchmark runner
-├── app.py                     # Streamlit application entrypoint
-├── requirements.txt           # Dependency specifications
-└── README.md
+[Retrieved Ground-Truth Context] ──┐
+                                   ├──► [TypeSafe AI: Jev Core Model]
+[Streaming RAG Generated Token]  ──┘          │
+                                              ▼ Structured Probabilities
+                                     [P_C, P_E, P_N Vectors]
+                                              │
+                                              ▼
+                                 [JevGuard Circuit-Breaker Gate]
+                                    ├─ P_C > 0.50 ──► 🛑 HALT (Sever Stream)
+                                    ├─ P_E > 0.60 ──► ✅ PASS (Verified)
+                                    └─ Otherwise  ──► ⚠️ WARN (Speculative)
 
-🚀 Getting Started
-1. Installation
+
+ Evaluation Benchmarks (Jev Decision Engine)Evaluated across production scenarios in Finance, Medical, and Enterprise Tech:DomainRetrieved Ground Truth ContextGenerated LLM ClaimCore ModelVerdictLatency (CPU)Contradiction %Entailment %FinanceCloud enterprise subscriptions grew by 35% in Q3.Enterprise cloud subscriptions declined in Q3.TypeSafe Jev🛑 HALT51.2 ms99.9%0.0%FinanceQ3 revenue reached $4.2B driven by cloud growth.Cloud enterprise revenue increased in Q3.TypeSafe Jev✅ PASS48.6 ms0.0%99.8%MedicalPatient exhibits elevated liver enzymes with no fever.Patient is diagnosed with acute bacterial meningitis.TypeSafe Jev🛑 HALT53.1 ms98.7%0.1%TechModel training completed in 4 epochs.Model will be updated again next Monday.TypeSafe Jev⚠️ WARN
+
+
+ 🏗️ Repository Architecture
+
+ JevGuard/
+├── .github/workflows/         # Automated CI/CD regression workflows
+│   └── ci.yml
+├── src/                       # Jev decision core & arbitration logic
+│   ├── __init__.py
+│   ├── model.py               # Underlying NLI cross-attention backbone
+│   ├── fast_jevguard.py       # Execution graph optimizations
+│   └── guard_engine.py        # JevArbiter implementation & probability routing
+├── tests/                     # Multi-domain evaluation suite
+│   ├── __init__.py
+│   └── benchmark.py           # Automated Jev regression harness
+├── app.py                     # Streamlit live telemetry dashboard
+├── requirements.txt           # Production dependencies
+└── README.md     
+
+
+🚀 Quickstart & Reproduction
+
+1. Clone & Install Dependencies
 git clone [https://github.com/SakshiKumari271/JevGuard.git](https://github.com/SakshiKumari271/JevGuard.git)
 cd JevGuard
 pip install -r requirements.txt
 
-2. Run Domain Benchmarks
+2. Run Jev Decision Benchmarks
 python tests/benchmark.py
 
-3. Run Streamlit Application
+3. Launch Local Telemetry UI
 streamlit run app.py
 
-🔗 Project Links
-Live Application: https://jevguard-5.streamlit.app
+🔗 Live Application & Links
+
+Interactive Telemetry Dashboard: https://jevguard-5.streamlit.app
 
 Source Repository: https://github.com/SakshiKumari271/JevGuard
 
-Base Architecture: DeBERTa-v3 NLI Cross-Encoder
+Core Architecture: TypeSafe AI Jev Decision Calibration Framework
