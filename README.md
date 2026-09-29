@@ -101,9 +101,9 @@ Evaluated across production scenarios in Finance, Medical, and Enterprise Tech:
 </table>
 
 
-🏗️ Repository Architecture
+## 🏗️ Repository Architecture
 
-JevGuard/
+<pre><code>JevGuard/
 ├── .github/workflows/         # Automated CI/CD regression workflows
 │   └── ci.yml
 ├── src/                       # Jev decision core & arbitration logic
@@ -116,26 +116,29 @@ JevGuard/
 │   └── benchmark.py           # Automated Jev regression harness
 ├── app.py                     # Streamlit live telemetry dashboard
 ├── requirements.txt           # Production dependencies
-└── README.md
+└── README.md</code></pre>
 
+---
 
-🚀 Quickstart & Reproduction
+## 🚀 Quickstart & Reproduction
 
-1. Clone & Install Dependencies
-git clone [https://github.com/SakshiKumari271/JevGuard.git](https://github.com/SakshiKumari271/JevGuard.git)
+<p><b>1. Clone & Install Dependencies:</b></p>
+<pre><code>git clone https://github.com/SakshiKumari271/JevGuard.git
 cd JevGuard
-pip install -r requirements.txt
+pip install -r requirements.txt</code></pre>
 
-3. Run Jev Decision Benchmarks
-python tests/benchmark.py
+<p><b>2. Run Jev Decision Benchmarks:</b></p>
+<pre><code>python tests/benchmark.py</code></pre>
 
-4. Launch Local Telemetry UI
-streamlit run app.py
+<p><b>3. Launch Local Telemetry Dashboard:</b></p>
+<pre><code>streamlit run app.py</code></pre>
 
-🔗 Live Application & Links
+---
 
-Interactive Telemetry Dashboard: https://jevguard-5.streamlit.app
+## 🔗 Live Application & Links
 
-Source Repository: https://github.com/SakshiKumari271/JevGuard
-
-Core Architecture: TypeSafe AI Jev Decision Calibration Framework
+<ul>
+  <li><b>Interactive Dashboard:</b> <a href="https://jevguard-5.streamlit.app">https://jevguard-5.streamlit.app</a></li>
+  <li><b>Source Repository:</b> <a href="https://github.com/SakshiKumari271/JevGuard">https://github.com/SakshiKumari271/JevGuard</a></li>
+  <li><b>Core Engine:</b> TypeSafe AI Jev Decision Calibration Framework</li>
+</ul>
