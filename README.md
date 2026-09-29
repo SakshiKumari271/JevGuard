@@ -25,7 +25,7 @@ Released by TypeSafe AI on September 15, 2026, **Jev** shifts the paradigm from 
 
 JevGuard wraps the Jev decision engine with a zero-delay circuit-breaker pattern:
 
-```text
+
 [Retrieved Ground-Truth Context] ──┐
                                    ├──► [TypeSafe AI: Jev Core Model]
 [Streaming RAG Generated Token]  ──┘          │
@@ -39,12 +39,13 @@ JevGuard wraps the Jev decision engine with a zero-delay circuit-breaker pattern
                                     └─ Otherwise  ──► ⚠️ WARN (Speculative)
 
 
- Evaluation Benchmarks (Jev Decision Engine)Evaluated across production scenarios in Finance, Medical, and Enterprise Tech:DomainRetrieved Ground Truth ContextGenerated LLM ClaimCore ModelVerdictLatency (CPU)Contradiction %Entailment %FinanceCloud enterprise subscriptions grew by 35% in Q3.Enterprise cloud subscriptions declined in Q3.TypeSafe Jev🛑 HALT51.2 ms99.9%0.0%FinanceQ3 revenue reached $4.2B driven by cloud growth.Cloud enterprise revenue increased in Q3.TypeSafe Jev✅ PASS48.6 ms0.0%99.8%MedicalPatient exhibits elevated liver enzymes with no fever.Patient is diagnosed with acute bacterial meningitis.TypeSafe Jev🛑 HALT53.1 ms98.7%0.1%TechModel training completed in 4 epochs.Model will be updated again next Monday.TypeSafe Jev⚠️ WARN
+📊 Evaluation Benchmarks (Jev Decision Engine)
 
+Evaluated across production scenarios in Finance, Medical, and Enterprise Tech:
+DomainRetrieved Ground Truth ContextGenerated LLM ClaimCore ModelVerdictLatency (CPU)Contradiction %Entailment %FinanceCloud enterprise subscriptions grew by 35% in Q3.Enterprise cloud subscriptions declined in Q3.TypeSafe Jev🛑 HALT51.2 ms99.9%0.0%FinanceQ3 revenue reached $4.2B driven by cloud growth.Cloud enterprise revenue increased in Q3.TypeSafe Jev✅ PASS48.6 ms0.0%99.8%MedicalPatient exhibits elevated liver enzymes with no fever.Patient is diagnosed with acute bacterial meningitis.TypeSafe Jev🛑 HALT53.1 ms98.7%0.1%TechModel training completed in 4 epochs.Model will be updated again next Monday.TypeSafe Jev⚠️ WARN
 
- 🏗️ Repository Architecture
-
- JevGuard/
+🏗️ Repository Architecture
+JevGuard/
 ├── .github/workflows/         # Automated CI/CD regression workflows
 │   └── ci.yml
 ├── src/                       # Jev decision core & arbitration logic
@@ -57,8 +58,7 @@ JevGuard wraps the Jev decision engine with a zero-delay circuit-breaker pattern
 │   └── benchmark.py           # Automated Jev regression harness
 ├── app.py                     # Streamlit live telemetry dashboard
 ├── requirements.txt           # Production dependencies
-└── README.md     
-
+└── README.md
 
 🚀 Quickstart & Reproduction
 
@@ -74,7 +74,6 @@ python tests/benchmark.py
 streamlit run app.py
 
 🔗 Live Application & Links
-
 Interactive Telemetry Dashboard: https://jevguard-5.streamlit.app
 
 Source Repository: https://github.com/SakshiKumari271/JevGuard
