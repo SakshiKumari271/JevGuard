@@ -39,12 +39,70 @@ JevGuard wraps the Jev decision engine with a zero-delay circuit-breaker pattern
                                     └─ Otherwise  ──► ⚠️ WARN (Speculative)
 
 
-📊 Evaluation Benchmarks (Jev Decision Engine)
+## 📊 Evaluation Benchmarks (Jev Decision Engine)
 
 Evaluated across production scenarios in Finance, Medical, and Enterprise Tech:
-DomainRetrieved Ground Truth ContextGenerated LLM ClaimCore ModelVerdictLatency (CPU)Contradiction %Entailment %FinanceCloud enterprise subscriptions grew by 35% in Q3.Enterprise cloud subscriptions declined in Q3.TypeSafe Jev🛑 HALT51.2 ms99.9%0.0%FinanceQ3 revenue reached $4.2B driven by cloud growth.Cloud enterprise revenue increased in Q3.TypeSafe Jev✅ PASS48.6 ms0.0%99.8%MedicalPatient exhibits elevated liver enzymes with no fever.Patient is diagnosed with acute bacterial meningitis.TypeSafe Jev🛑 HALT53.1 ms98.7%0.1%TechModel training completed in 4 epochs.Model will be updated again next Monday.TypeSafe Jev⚠️ WARN
+
+<table>
+  <thead>
+    <tr>
+      <th>Domain</th>
+      <th>Retrieved Ground Truth Context</th>
+      <th>Generated LLM Claim</th>
+      <th>Core Model</th>
+      <th>Verdict</th>
+      <th>Latency (CPU)</th>
+      <th>Contradiction %</th>
+      <th>Entailment %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Finance</b></td>
+      <td>Cloud enterprise subscriptions grew by 35% in Q3.</td>
+      <td>Enterprise cloud subscriptions declined in Q3.</td>
+      <td><b>TypeSafe Jev</b></td>
+      <td>🛑 HALT</td>
+      <td><b>51.2 ms</b></td>
+      <td>99.9%</td>
+      <td>0.0%</td>
+    </tr>
+    <tr>
+      <td><b>Finance</b></td>
+      <td>Q3 revenue reached $4.2B driven by cloud growth.</td>
+      <td>Cloud enterprise revenue increased in Q3.</td>
+      <td><b>TypeSafe Jev</b></td>
+      <td>✅ PASS</td>
+      <td><b>48.6 ms</b></td>
+      <td>0.0%</td>
+      <td>99.8%</td>
+    </tr>
+    <tr>
+      <td><b>Medical</b></td>
+      <td>Patient exhibits elevated liver enzymes with no fever.</td>
+      <td>Patient is diagnosed with acute bacterial meningitis.</td>
+      <td><b>TypeSafe Jev</b></td>
+      <td>🛑 HALT</td>
+      <td><b>53.1 ms</b></td>
+      <td>98.7%</td>
+      <td>0.1%</td>
+    </tr>
+    <tr>
+      <td><b>Tech</b></td>
+      <td>Model training completed in 4 epochs.</td>
+      <td>Model will be updated again next Monday.</td>
+      <td><b>TypeSafe Jev</b></td>
+      <td>⚠️ WARN</td>
+      <td><b>49.8 ms</b></td>
+      <td>3.4%</td>
+      <td>0.1%</td>
+    </tr>
+  </tbody>
+</table>
+
 
 🏗️ Repository Architecture
+
 JevGuard/
 ├── .github/workflows/         # Automated CI/CD regression workflows
 │   └── ci.yml
@@ -60,6 +118,7 @@ JevGuard/
 ├── requirements.txt           # Production dependencies
 └── README.md
 
+
 🚀 Quickstart & Reproduction
 
 1. Clone & Install Dependencies
@@ -67,10 +126,10 @@ git clone [https://github.com/SakshiKumari271/JevGuard.git](https://github.com/S
 cd JevGuard
 pip install -r requirements.txt
 
-2. Run Jev Decision Benchmarks
+3. Run Jev Decision Benchmarks
 python tests/benchmark.py
 
-3. Launch Local Telemetry UI
+4. Launch Local Telemetry UI
 streamlit run app.py
 
 🔗 Live Application & Links
